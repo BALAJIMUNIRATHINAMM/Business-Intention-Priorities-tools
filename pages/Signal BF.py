@@ -38,9 +38,9 @@ def extract_priorities(df):
                     'Highlights Month': highlights_month,
                     'Priority Type': priority_type,
                     'BF': category,
-                    'Priority': priority.get('priority', 'N/A'),
-                    'Description': priority.get('description', 'N/A'),
-                    'Recent Year Month': priority.get('recent_year_month', 'N/A'),
+                    'Priority': priority.get('priority', '-'),
+                    'Description': priority.get('description', '-'),
+                    'Recent Year Month': priority.get('recent_year_month', '-'),
                 })
     
     return pd.DataFrame(extracted_data)
