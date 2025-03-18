@@ -39,8 +39,9 @@ def extract_priorities(df):
                     'Quarter': quarter,
                     'Report Type': report_type,
                     'Refreshed Date': refreshed_date,
-                    'Priority': priority_item.get('priority', 'N/A'),
-                    'Description': priority_item.get('description', 'N/A')
+                    'Priority': priority_item.get('priority', '-'),
+                    'Description': priority_item.get('description', '-'),
+                    'Recent Year Quater': priority_item.get('recent_year_quarter', '-'),
                 })
     
     return pd.DataFrame(extracted_data)
