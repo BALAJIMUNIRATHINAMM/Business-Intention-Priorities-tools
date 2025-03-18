@@ -1,4 +1,6 @@
 import streamlit as st
+import os
+print(os.listdir("/"))
 
 # Set page configuration
 st.set_page_config(
