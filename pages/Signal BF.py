@@ -14,7 +14,7 @@ def extract_priorities(df):
     
     if missing_columns:
         st.error(f"❌ Missing columns in the uploaded file: {', '.join(missing_columns)}")
-        return pd.DataFrame()
+        return pd.DataFrame(columns=required_columns)  # Return an empty DataFrame with required columns
     
     for _, row in df.iterrows():
         company = row.get('Company', 'Unknown')
@@ -40,7 +40,7 @@ def extract_priorities(df):
                     'BF': category,
                     'Priority': priority.get('priority', '-'),
                     'Description': priority.get('description', '-'),
-                    'Recent Year Month': priority.get('recent_year_month', '-'),
+                    'Recent Year Month': priority.get('recent_year_month', '-')
                 })
     
     return pd.DataFrame(extracted_data)
@@ -55,16 +55,18 @@ if 'extracted_df' not in st.session_state:
     st.session_state['extracted_df'] = pd.DataFrame()
 
 # File Upload
-uploaded_file = st.file_uploader("📂 Upload CSV or Excel file", type=['csv', 'xlsx'])
+uploaded_file = st.file_uploader("📂 Upload CSV or Excel file", type=['csv', 'xlsx', 'json'])
 
 if uploaded_file:
-    file_extension = uploaded_file.name.split(".")[-1]
+    file_extension = uploaded_file.name.split(".")[-1].lower()
     
     if file_extension == "csv":
         df = pd.read_csv(uploaded_file)
+    elif file_extension == "json":
+        df = pd.read_json(uploaded_file)
     else:
         df = pd.read_excel(uploaded_file)
-    
+
     st.success("✅ File Uploaded Successfully!")
     
     # Process and Extract Data
