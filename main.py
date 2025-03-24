@@ -55,11 +55,11 @@ with col3:
         page_link="pages/Aggregated.py"
     )
 
-# Footer
 st.markdown(
     """
-    <hr>
-    <p style="text-align: center; color: #555;">Created by Balaji M</p>
-    """,
-    unsafe_allow_html=True
+    <style>
+    .footer {position: fixed; left: 0; bottom: -17px; width: 100%; background-color: #b1b1b5; color: black; text-align: center;}
+    </style>
+    <div class="footer"><p>© 2025 Draup Dataflow Engine</p></div>
+    """, unsafe_allow_html=True
 )

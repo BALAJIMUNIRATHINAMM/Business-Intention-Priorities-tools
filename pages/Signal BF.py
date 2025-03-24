@@ -114,3 +114,13 @@ if uploaded_file:
         st.warning("⚠️ No priorities extracted. Please check your file format.")
 else:
     st.warning("Please upload a file to begin processing.")
+
+# Footer
+st.markdown(
+    """
+    <style>
+    .footer {position: fixed; left: 0; bottom: -17px; width: 100%; background-color: #b1b1b5; color: black; text-align: center;}
+    </style>
+    <div class="footer"><p>© 2025 Draup Dataflow Engine</p></div>
+    """, unsafe_allow_html=True
+)
