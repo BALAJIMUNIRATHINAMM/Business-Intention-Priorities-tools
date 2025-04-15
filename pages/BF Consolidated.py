@@ -32,7 +32,6 @@ def extract_priorities(df):
                     'BF': category,
                     'Priority': priority_item.get('priority', '-'),
                     'Description': priority_item.get('description', '-'),
-                    'Recent Year Quater': priority_item.get('recent_year_quarter', '-'),
                     'source': priority_item.get('source', '-'),
                     'recent_year_month': priority_item.get('recent_year_month', '-'),
                     'recent_year_quarter': priority_item.get('recent_year_quarter', '-'),
