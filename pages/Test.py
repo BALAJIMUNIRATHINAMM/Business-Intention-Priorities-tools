@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import json
+import ast
 from datetime import datetime
 import io
 
@@ -27,7 +28,13 @@ def extract_priorities(df):
         try:
             if pd.isna(content) or content in ["", "nan", "None"]:
                 raise ValueError("Empty or invalid JSON field")
-            priorities = json.loads(str(content))
+
+            content_str = str(content)
+            try:
+                priorities = json.loads(content_str)
+            except json.JSONDecodeError:
+                priorities = ast.literal_eval(content_str)
+
         except Exception:
             st.warning(f"⚠️ Invalid JSON format for Company: {company}")
             continue
