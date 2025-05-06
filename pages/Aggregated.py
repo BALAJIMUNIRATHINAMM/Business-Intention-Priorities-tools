@@ -59,7 +59,7 @@ if uploaded_file is not None:
             df['Workload'] = df['Functional Workload'].apply(sort_dict)
             
             df_output = df[['S.No.', 'Company', 'Business Function', 'Priority Name', 'Description', 'Usecases', 'Workload',
-                            'Recent Year Month', 'Recent Year Quarter', 'Months Considered', 'Quarter Considered', 'Primary Vertical']]
+                            'Recent Year Month', 'Recent Year Quarter', 'Months Considered', 'Quarter Considered', 'Primary Vertical']].fillna('-')
             
             if master_file is not None:
                 cmp = read_file(master_file)
