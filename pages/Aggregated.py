@@ -13,21 +13,29 @@ def convert_binary_to_text(input_text):
     return input_text
 
 @st.cache_data
-def sort_dict(input_dict):
-    """Sorts dictionary values in descending order and returns top 3 keys as a string."""
+def sort_dict(input_data):
+    """Handles dict, list of dicts, or str inputs. Returns top 3 keys or names based on score/value."""
     try:
-        if isinstance(input_dict, str):
-            input_dict = json.loads(input_dict.replace("'", "\""))  # Convert single to double quotes for valid JSON
-        elif not isinstance(input_dict, dict):
-            return ""
+        # Convert string input to Python object
+        if isinstance(input_data, str):
+            input_data = json.loads(input_data.replace("'", "\""))  # basic fix for malformed JSON
         
-        sorted_values = sorted(input_dict.values(), reverse=True)
-        dict_data = {key: input_dict[key] for key in sorted(input_dict, key=input_dict.get, reverse=True)}
-        dict_data = dict(islice(dict_data.items(), 3))  # Take top 3 values
-        return '; '.join(dict_data.keys())
-    except Exception:
-        return ""
+        # Case 1: input is a dict
+        if isinstance(input_data, dict):
+            sorted_items = sorted(input_data.items(), key=lambda x: x[1], reverse=True)
+            top_keys = [key for key, _ in islice(sorted_items, 3)]
+            return '; '.join(top_keys)
+        
+        # Case 2: input is a list of dicts with 'name' and 'score'
+        elif isinstance(input_data, list) and all(isinstance(i, dict) and 'name' in i and 'score' in i for i in input_data):
+            sorted_items = sorted(input_data, key=lambda x: x['score'], reverse=True)
+            top_names = [item['name'] for item in islice(sorted_items, 3)]
+            return '; '.join(top_names)
 
+        else:
+            return ""
+    except (json.JSONDecodeError, TypeError, ValueError):
+        return ""
 # Streamlit App UI
 st.set_page_config(page_title="Aggregated Priority Extraction Tool", page_icon="🍳", layout="wide")
 st.title("\U0001F373 Aggregated Priority Extraction Tool")  
