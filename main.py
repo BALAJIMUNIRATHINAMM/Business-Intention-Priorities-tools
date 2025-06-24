@@ -1,6 +1,5 @@
 import streamlit as st
 import os
-print(os.listdir("/"))
 
 # Set page configuration
 st.set_page_config(
@@ -8,12 +7,14 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
-        "About": "Business Intention Priority Extraction Tools is a data request application that streamlines data requests, enhances collaboration among stakeholders, and improves operational efficiency."
+        "About": "Business Intention Priority Extraction Tools is a data request application that streamlines data requests, enhances collaboration among stakeholders, and improves operational efficiency.",
+        "Get help": "https://github.com/your-repo/issues",
+        "Report a bug": "https://github.com/your-repo/issues"
     }
 )
 
 # Header with styling
-st.header('🍳Business Intention Priorities Tools',divider='rainbow')
+st.header('🍳Business Intention Priorities Tools', divider='rainbow')
 
 # Layout with uniform column spacing
 col1, col2, col3 = st.columns(3)
@@ -55,11 +56,62 @@ with col3:
         page_link="pages/Aggregated.py"
     )
 
+# Additional Information Section
+st.markdown("---")
+st.header("📋 Additional Tools & Information")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("🔧 Advanced Tools")
+    if st.button("🔄 BF Consolidated Priority Tool", use_container_width=True):
+        st.page_link("pages/BF Consolidated.py", label="Go to Consolidated Tool", icon="🔄")
+    
+    if st.button("📊 Consolidated All Priorities", use_container_width=True):
+        st.page_link("pages/Consolidated All.py", label="Go to All Priorities", icon="📊")
+
+with col2:
+    st.subheader("ℹ️ Information & Support")
+    if st.button("📖 About & Attributions", use_container_width=True):
+        st.page_link("pages/About.py", label="About This Application", icon="📖")
+    
+    st.info("Built with open-source technologies. See About page for full attributions.", icon="🙏")
+
+# Open Source Notice
+st.markdown("---")
+st.markdown(
+    """
+    <div style='background-color: #f0f2f6; padding: 15px; border-radius: 10px; margin: 20px 0;'>
+        <h4 style='margin: 0; color: #333;'>🙏 Open Source Acknowledgment</h4>
+        <p style='margin: 10px 0 0 0; color: #666;'>
+            This application is built using excellent open-source libraries including Streamlit, Pandas, OpenPyXL, and XlsxWriter. 
+            We thank the open-source community for making these tools available.
+            <a href='pages/About.py' style='color: #1f77b4;'>View full attributions →</a>
+        </p>
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
+
+# Footer with enhanced attribution
 st.markdown(
     """
     <style>
-    .footer {position: fixed; left: 0; bottom: -17px; width: 100%; background-color: #b1b1b5; color: black; text-align: center;}
+    .footer {
+        position: fixed; 
+        left: 0; 
+        bottom: -17px; 
+        width: 100%; 
+        background-color: #b1b1b5; 
+        color: black; 
+        text-align: center;
+        padding: 10px 0;
+    }
     </style>
-    <div class="footer"><p>© 2025 Draup Dataflow Engine</p></div>
-    """, unsafe_allow_html=True
+    <div class="footer">
+        <p>© 2025 Draup Dataflow Engine | Built with open-source technologies | 
+        <a href='pages/About.py' style='color: #333; text-decoration: none;'>View Attributions</a></p>
+    </div>
+    """, 
+    unsafe_allow_html=True
 )
