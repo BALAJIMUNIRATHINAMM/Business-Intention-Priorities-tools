@@ -2,3 +2,8 @@ streamlit
 pandas
 openpyxl
 xlsxwriter
+streamlit-authenticator
+bcrypt
+pyyaml
+plotly
+sqlite3
