@@ -14,28 +14,65 @@ def convert_binary_to_text(input_text):
 
 @st.cache_data
 def sort_dict(input_data):
-    """Handles dict, list of dicts, or str inputs. Returns top 3 keys or names based on score/value."""
+    """
+    Handles dict, list of dicts, or str inputs.
+    Returns top 3 keys or names based on score/value.
+    """
     try:
-        # Convert string input to Python object
+        # Clean malformed string input (e.g., with //)
         if isinstance(input_data, str):
-            input_data = json.loads(input_data.replace("'", "\""))  # basic fix for malformed JSON
-        
-        # Case 1: input is a dict
+            cleaned = input_data.strip()
+            if cleaned.startswith("//"):
+                cleaned = cleaned[2:]
+            if cleaned.endswith("//"):
+                cleaned = cleaned[:-2]
+            input_data = json.loads(cleaned)
+
+        # Case 1: input is a dict of key-score pairs
         if isinstance(input_data, dict):
             sorted_items = sorted(input_data.items(), key=lambda x: x[1], reverse=True)
             top_keys = [key for key, _ in islice(sorted_items, 3)]
             return '; '.join(top_keys)
-        
+
         # Case 2: input is a list of dicts with 'name' and 'score'
-        elif isinstance(input_data, list) and all(isinstance(i, dict) and 'name' in i and 'score' in i for i in input_data):
+        elif isinstance(input_data, list) and all(
+            isinstance(i, dict) and 'name' in i and 'score' in i for i in input_data
+        ):
             sorted_items = sorted(input_data, key=lambda x: x['score'], reverse=True)
             top_names = [item['name'] for item in islice(sorted_items, 3)]
             return '; '.join(top_names)
 
+        # Invalid format
         else:
             return ""
-    except (json.JSONDecodeError, TypeError, ValueError):
+
+    except (json.JSONDecodeError, TypeError, ValueError) as e:
         return ""
+        
+#old pattern
+# def sort_dict(input_data):
+#     """Handles dict, list of dicts, or str inputs. Returns top 3 keys or names based on score/value."""
+#     try:
+#         # Convert string input to Python object
+#         if isinstance(input_data, str):
+#             input_data = json.loads(input_data.replace("'", "\""))  # basic fix for malformed JSON
+        
+#         # Case 1: input is a dict
+#         if isinstance(input_data, dict):
+#             sorted_items = sorted(input_data.items(), key=lambda x: x[1], reverse=True)
+#             top_keys = [key for key, _ in islice(sorted_items, 3)]
+#             return '; '.join(top_keys)
+        
+#         # Case 2: input is a list of dicts with 'name' and 'score'
+#         elif isinstance(input_data, list) and all(isinstance(i, dict) and 'name' in i and 'score' in i for i in input_data):
+#             sorted_items = sorted(input_data, key=lambda x: x['score'], reverse=True)
+#             top_names = [item['name'] for item in islice(sorted_items, 3)]
+#             return '; '.join(top_names)
+
+#         else:
+#             return ""
+#     except (json.JSONDecodeError, TypeError, ValueError):
+#         return ""
 # Streamlit App UI
 st.set_page_config(page_title="Aggregated Priority Extraction Tool", page_icon="🍳", layout="wide")
 st.title("\U0001F373 Aggregated Priority Extraction Tool")  
