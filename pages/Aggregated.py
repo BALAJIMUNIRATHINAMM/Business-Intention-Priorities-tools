@@ -6,7 +6,7 @@ from itertools import islice
 
 # -------------------------- Streamlit Config -------------------------- #
 st.set_page_config(page_title="Aggregated Priority Extraction Tool", page_icon="📊", layout="wide")
-st.title("📊 Aggregated Priority Extraction Tool")
+st.title("Priority Tool")
 st.info("Upload a priority mapping file (CSV or Excel) to extract and format top priorities, usecases, and workloads.")
 
 # -------------------------- Utility Functions -------------------------- #
